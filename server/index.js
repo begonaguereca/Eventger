@@ -61,14 +61,18 @@ app.get('/eventData', function (req, res) {
 
 //Add user to DB
 app.post('/signup', function(req, res) {
+  console.log('INSIDE REQ,', req.body)
   // check DB if user exisits
   db.findUsernameAsync('req.body.username')
     .then((userObj) => {
   //save user
   db.saveUsernameAsync(req.body)
-    .then((results) => res.send('User Added'))
+    .then((results) => res.send(true))
     //will send message if already in DB
-    .catch((err)=> res.send('User already in DB'))
+    .catch((err)=> {
+      console.log(err)
+      res.send('User already in DB')
+    })
   })
 });
 
